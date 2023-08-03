@@ -9,7 +9,7 @@
         @csrf
         <div class="row mb-3">
             <div class="col">
-                <input type="text" name="name" class="form-control form-control-user @error('title')is-invalid @enderror" id="exampleInputName" placeholder="Title">
+                <input type="text" name="title" class="form-control form-control-user @error('title')is-invalid @enderror" id="exampleInputName" placeholder="Title">
                 @error('title')
                 <span class="invalid-feedback">{{ $message }}</span>
                 @enderror
