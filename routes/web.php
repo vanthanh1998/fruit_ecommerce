@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('trang-chu', [HomeController::class, 'index'])->name('home.index');
 
 Route::group(['prefix'=>'admin'],function(){
     Route::controller(AuthController::class)->group(function () {
@@ -47,6 +49,6 @@ Route::middleware('auth')->group(function () {
             Route::delete('destroy/{id}', 'destroy')->name('products.destroy');
         });
 
-        Route::get('admin/profile', [\App\Http\Controllers\Admin\AuthController::class, 'profile'])->name('profile');
+        Route::get('admin/profile', [AuthController::class, 'profile'])->name('profile');
     });
 });
