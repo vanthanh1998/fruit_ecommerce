@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -13,7 +14,7 @@ class AuthController extends Controller
 {
     public function register()
     {
-        return view('auth/register');
+        return view('admin/auth/register');
     }
 
     public function registerSave(Request $request)
@@ -36,7 +37,7 @@ class AuthController extends Controller
 
     public function login()
     {
-        return view('auth/login');
+        return view('admin/auth/login');
     }
 
     public function loginAction(Request $request)
@@ -54,7 +55,7 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->route('dashboard');
+        return redirect()->route('admin/dashboard');
     }
 
     public function logout(Request $request)
@@ -68,6 +69,6 @@ class AuthController extends Controller
 
     public function profile()
     {
-        return view('profile');
+        return view('admin/profile');
     }
 }

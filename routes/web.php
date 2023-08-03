@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\ProductController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,7 +31,7 @@ Route::controller(AuthController::class)->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('dashboard', function () {
-        return view('dashboard');
+        return view('admin/dashboard');
     })->name('dashboard');
 
     Route::controller(ProductController::class)->prefix('products')->group(function () {
@@ -44,5 +44,5 @@ Route::middleware('auth')->group(function () {
         Route::delete('destroy/{id}', 'destroy')->name('products.destroy');
     });
 
-    Route::get('/profile', [App\Http\Controllers\AuthController::class, 'profile'])->name('profile');
+    Route::get('/profile', [\App\Http\Controllers\Admin\AuthController::class, 'profile'])->name('profile');
 });

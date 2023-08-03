@@ -19,7 +19,7 @@
 <div id="wrapper">
 
     <!-- Sidebar -->
-    @include('layouts.sidebar')
+    @include('admin.layouts.sidebar')
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
@@ -29,7 +29,7 @@
         <div id="content">
 
             <!-- Topbar -->
-            @include('layouts.navbar')
+            @include('admin.layouts.navbar')
             <!-- End of Topbar -->
 
             <!-- Begin Page Content -->
@@ -52,7 +52,7 @@
         <!-- End of Main Content -->
 
         <!-- Footer -->
-        @include('layouts.footer')
+        @include('admin.layouts.footer')
         <!-- End of Footer -->
 
     </div>

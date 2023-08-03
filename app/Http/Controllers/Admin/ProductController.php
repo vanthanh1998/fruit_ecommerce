@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
-use Illuminate\Http\Request;
 use App\Models\Product;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {

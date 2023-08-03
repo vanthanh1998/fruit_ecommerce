@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('admin.layouts.app')
 
 @section('title', 'Dashboard - Laravel Admin Panel With Login and Registration')
 
