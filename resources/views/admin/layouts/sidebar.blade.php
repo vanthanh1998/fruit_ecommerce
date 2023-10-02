@@ -25,6 +25,12 @@
     </li>
 
     <li class="nav-item">
+        <a class="nav-link" href="{{ route('categories') }}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Category</span></a>
+    </li>
+
+    <li class="nav-item">
         <a class="nav-link" href="{{ route('profile') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Profile</span></a>

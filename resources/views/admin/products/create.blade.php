@@ -9,8 +9,21 @@
         @csrf
         <div class="row mb-3">
             <div class="col">
-                <input type="text" name="title" class="form-control form-control-user @error('title')is-invalid @enderror" id="exampleInputName" placeholder="Title">
-                @error('title')
+                <select id="cars" name="category_id" class="form-control form-control-user @error('category_id')is-invalid @enderror" id="exampleInputName">
+                    <option value=""></option>
+                    @foreach ($categories as $val)
+                        <option value="{{ $val->id }}">{{ $val->name }}</option>
+                    @endforeach
+                </select>
+                @error('category_id')
+                <span class="invalid-feedback">{{ $message }}</span>
+                @enderror
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <input type="text" name="name" class="form-control form-control-user @error('name')is-invalid @enderror" id="exampleInputName" placeholder="Name">
+                @error('name')
                 <span class="invalid-feedback">{{ $message }}</span>
                 @enderror
             </div>
@@ -23,11 +36,13 @@
         </div>
         <div class="row mb-3">
             <div class="col">
-                <input type="text" name="product_code" class="form-control form-control-user @error('product_code')is-invalid @enderror" id="exampleInputName" placeholder="Product Code">
-                @error('product_code')
+                <input type="file" name="image" class="form-control-user @error('image')is-invalid @enderror" id="exampleInputName">
+                @error('image')
                 <span class="invalid-feedback">{{ $message }}</span>
                 @enderror
             </div>
+        </div>
+        <div class="row mb-3">
             <div class="col">
                 <textarea class="form-control" name="description" placeholder="Descriptoin"></textarea>
             </div>

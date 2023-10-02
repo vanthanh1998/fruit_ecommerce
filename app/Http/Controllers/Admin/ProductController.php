@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
+use App\Models\Category;
 use App\Models\Product;
-use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -14,9 +14,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $product = Product::orderBy('created_at', 'DESC')->get();
+        $products = Product::orderBy('created_at', 'DESC')->get();
 
-        return view('admin.products.index', compact('product'));
+        return view('admin.products.index', compact('products'));
     }
 
     /**
@@ -24,7 +24,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('admin.products.create');
+        $categories = Category::orderBy('created_at', 'DESC')->get();
+        return view('admin.products.create', compact('categories'));
     }
 
     /**
@@ -32,7 +33,19 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        Product::create($request->all());
+        $data = $request->all();
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $filename = time() . '.' . $image->getClientOriginalExtension();
+
+            // Save the image to the desired directory
+            $path = public_path('admin/img/products/' . $filename);
+            file_put_contents($path, file_get_contents($image));
+
+            // Save the filename to the database (assuming the table has a column named 'image')
+            $data['image'] = $filename;
+        }
+        Product::create($data);
 
         return redirect()->route('products')->with('success', 'Product added successfully');
     }
@@ -40,31 +53,50 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(int $id)
     {
-        $product = Product::findOrFail($id);
-
+        $product = Product::with('category')->findOrFail($id);
+//        dd($product->category->name);
         return view('admin.products.show', compact('product'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(int $id)
     {
-        $product = Product::findOrFail($id);
+        $product = Product::with('category')->findOrFail($id);
+        $categories = Category::orderBy('created_at', 'DESC')->get();
 
-        return view('admin.products.edit', compact('product'));
+        return view('admin.products.edit', compact('product', 'categories'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ProductRequest $request, int $id)
     {
         $product = Product::findOrFail($id);
 
-        $product->update($request->all());
+        $data = $request->all();
+
+        if ($request->hasFile('image')) {
+            // delete image old
+            if ($product->image && file_exists(public_path('admin/img/products/' . $product->image))) {
+                unlink(public_path('admin/img/products/' . $product->image));
+            }
+
+            $image = $request->file('image');
+            $filename = time() . '.' . $image->getClientOriginalExtension();
+
+            // save image new
+            $path = public_path('admin/img/products/' . $filename);
+            file_put_contents($path, file_get_contents($image));
+
+            $data['image'] = $filename;
+        }
+
+        $product->update($data);
 
         return redirect()->route('products')->with('success', 'product updated successfully');
     }
@@ -72,7 +104,7 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(int $id)
     {
         $product = Product::findOrFail($id);
 
