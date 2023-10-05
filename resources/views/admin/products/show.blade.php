@@ -17,6 +17,10 @@
             <input type="text" name="name" class="form-control" value="{{ $product->name }}" readonly>
         </div>
         <div class="col mb-3">
+            <label class="form-label">Slug</label>
+            <input type="text" name="slug" class="form-control" value="{{ $product->slug }}" readonly>
+        </div>
+        <div class="col mb-3">
             <label class="form-label">Price</label>
             <input type="text" name="price" class="form-control" value="{{ $product->price }}" readonly>
         </div>

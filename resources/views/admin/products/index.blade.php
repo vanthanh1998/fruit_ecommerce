@@ -19,6 +19,7 @@
             <th>#</th>
             <th>Image</th>
             <th>Name</th>
+            <th>Slug</th>
             <th>Price</th>
             <th>Description</th>
             <th>Action</th>
@@ -33,6 +34,7 @@
                         <img style="width: 50px; height: 50px;" src="{{ asset('admin/img/products') .'/'. $product->image }}">
                     </td>
                     <td class="align-middle">{{ $product->name }}</td>
+                    <td class="align-middle">{{ $product->slug }}</td>
                     <td class="align-middle">{{ $product->price }}</td>
                     <td class="align-middle">{{ $product->description }}</td>
                     <td class="align-middle">

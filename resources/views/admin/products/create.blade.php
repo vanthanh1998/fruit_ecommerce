@@ -9,7 +9,7 @@
         @csrf
         <div class="row mb-3">
             <div class="col">
-                <select id="cars" name="category_id" class="form-control form-control-user @error('category_id')is-invalid @enderror" id="exampleInputName">
+                <select id="cars" name="category_id" class="form-control form-control-user @error('category_id')is-invalid @enderror">
                     <option value=""></option>
                     @foreach ($categories as $val)
                         <option value="{{ $val->id }}">{{ $val->name }}</option>
@@ -22,13 +22,19 @@
         </div>
         <div class="row mb-3">
             <div class="col">
-                <input type="text" name="name" class="form-control form-control-user @error('name')is-invalid @enderror" id="exampleInputName" placeholder="Name">
+                <input type="text" name="name" class="form-control form-control-user @error('name')is-invalid @enderror" placeholder="Name">
                 @error('name')
                 <span class="invalid-feedback">{{ $message }}</span>
                 @enderror
             </div>
             <div class="col">
-                <input type="text" name="price" class="form-control form-control-user @error('price')is-invalid @enderror" id="exampleInputName" placeholder="Price">
+                <input type="text" name="slug" class="form-control form-control-user @error('slug')is-invalid @enderror" placeholder="Slug">
+                @error('slug')
+                <span class="invalid-feedback">{{ $message }}</span>
+                @enderror
+            </div>
+            <div class="col">
+                <input type="text" name="price" class="form-control form-control-user @error('price')is-invalid @enderror" placeholder="Price">
                 @error('price')
                 <span class="invalid-feedback">{{ $message }}</span>
                 @enderror
@@ -36,7 +42,7 @@
         </div>
         <div class="row mb-3">
             <div class="col">
-                <input type="file" name="image" class="form-control-user @error('image')is-invalid @enderror" id="exampleInputName">
+                <input type="file" name="image" class="form-control-user @error('image')is-invalid @enderror">
                 @error('image')
                 <span class="invalid-feedback">{{ $message }}</span>
                 @enderror

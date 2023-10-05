@@ -24,6 +24,7 @@ class ProductRequest extends FormRequest
         $rules = [
             'category_id' => 'required',
             'name' => 'required',
+            'slug' => 'required',
             'price' =>'required',
         ];
 

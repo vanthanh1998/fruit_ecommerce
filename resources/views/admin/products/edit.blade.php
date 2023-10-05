@@ -26,6 +26,13 @@
                 @enderror
             </div>
             <div class="col mb-3">
+                <label class="form-label">Slug</label>
+                <input type="text" name="slug" class="form-control form-control-user @error('slug')is-invalid @enderror" value="{{ $product->slug }}" placeholder="Slug">
+                @error('name')
+                <span class="invalid-feedback">{{ $message }}</span>
+                @enderror
+            </div>
+            <div class="col mb-3">
                 <label class="form-label">Price</label>
                 <input type="text" name="price" class="form-control form-control-user @error('price')is-invalid @enderror" value="{{ $product->price }}" placeholder="Price">
                 @error('price')
