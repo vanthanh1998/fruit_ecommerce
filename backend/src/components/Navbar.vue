@@ -1,17 +1,12 @@
 <template>
     <header class="flex justify-between items-center p-3 h-14 shadow bg-white">
-        <button
-            @click="emit('toggle-sidebar')"
-            class="flex items-center justify-center rounded transition-colors w-8 h-8 text-gray-700 hover:bg-black/10"
-        >
-            <MenuIcon class="w-6" />
+        <button @click="emit('toggle-sidebar')"
+                class="flex items-center justify-center rounded transition-colors w-8 h-8 text-gray-700 hover:bg-black/10">
+            <MenuIcon class="w-6"/>
         </button>
         <Menu as="div" class="relative inline-block text-left">
             <MenuButton class="flex items-center">
-                <img
-                    src="https://randomuser.me/api/portraits/men/1.jpg"
-                    class="rounded-full w-8 mr-2"
-                />
+                <img src="https://randomuser.me/api/portraits/men/1.jpg" class="rounded-full w-8 mr-2">
                 <small>John Smith</small>
                 <ChevronDownIcon
                     class="h-5 w-5 text-violet-200 hover:text-violet-100"
@@ -34,11 +29,9 @@
                         <MenuItem v-slot="{ active }">
                             <button
                                 :class="[
-                                    active
-                                        ? 'bg-indigo-600 text-white'
-                                        : 'text-gray-900',
-                                    'group flex w-full items-center rounded-md px-2 py-2 text-sm',
-                                ]"
+                  active ? 'bg-indigo-600 text-white' : 'text-gray-900',
+                  'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+                ]"
                             >
                                 <UserIcon
                                     :active="active"
@@ -50,12 +43,11 @@
                         </MenuItem>
                         <MenuItem v-slot="{ active }">
                             <button
+                                @click="logout"
                                 :class="[
-                                    active
-                                        ? 'bg-indigo-600 text-white'
-                                        : 'text-gray-900',
-                                    'group flex w-full items-center rounded-md px-2 py-2 text-sm',
-                                ]"
+                  active ? 'bg-indigo-600 text-white' : 'text-gray-900',
+                  'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+                ]"
                             >
                                 <LogoutIcon
                                     :active="active"
@@ -73,11 +65,23 @@
 </template>
 
 <script setup>
-import { MenuIcon, LogoutIcon, UserIcon } from "@heroicons/vue/outline";
-import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
-import { ChevronDownIcon } from "@heroicons/vue/solid";
+import {MenuIcon, LogoutIcon, UserIcon} from '@heroicons/vue/outline'
+import {Menu, MenuButton, MenuItems, MenuItem} from '@headlessui/vue'
+import {ChevronDownIcon} from '@heroicons/vue/solid'
+import store from "../store";
+import router from "../router";
 
-const emit = defineEmits(["toggle-sidebar"]);
+const emit = defineEmits(['toggle-sidebar'])
+
+function logout() {
+    store.dispatch('logout')
+        .then(() => {
+            router.push({name: 'login'})
+        })
+}
+
 </script>
 
-<style scoped></style>
+<style scoped>
+
+</style>
