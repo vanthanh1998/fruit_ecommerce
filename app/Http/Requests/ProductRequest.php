@@ -21,19 +21,25 @@ class ProductRequest extends FormRequest
      */
     public function rules(): array
     {
-        $rules = [
-            'category_id' => 'required',
-            'name' => 'required',
-            'slug' => 'required',
-            'price' =>'required',
+        return [
+            'title' => ['required', 'max:2000'],
+            'image' => ['required', 'image'],
+            'price' => ['required', 'decimal'],
+            'description' => ['string']
         ];
-
-        if ($this->isMethod('patch') || $this->isMethod('put') || $this->has('image')) {
-            $rules['image'] = 'image|mimes:jpeg,png,jpg,gif,svg|max:2048';
-        } else {
-            $rules['image'] = 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048';
-        }
-
-        return $rules;
+//        $rules = [
+//            'category_id' => 'required',
+//            'name' => 'required',
+//            'slug' => 'required',
+//            'price' =>'required',
+//        ];
+//
+//        if ($this->isMethod('patch') || $this->isMethod('put') || $this->has('image')) {
+//            $rules['image'] = 'image|mimes:jpeg,png,jpg,gif,svg|max:2048';
+//        } else {
+//            $rules['image'] = 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048';
+//        }
+//
+//        return $rules;
     }
 }

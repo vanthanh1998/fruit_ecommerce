@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('category_id');
-            $table->string('name', 2000);
+            $table->string('title', 2000);
             $table->string('slug', 2000);
             $table->string('image', 2000)->nullable();
             $table->string('image_mime')->nullable();
@@ -26,8 +25,6 @@ return new class extends Migration
             $table->softDeletes();
             $table->foreignIdFor(User::class, 'deleted_by')->nullable();
             $table->timestamps();
-
-            $table->foreign('category_id')->references('id')->on('categories');
         });
     }
 
