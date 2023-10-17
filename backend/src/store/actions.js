@@ -17,47 +17,66 @@ export function login({commit}, data) {
         })
 }
 
-export async function logout({commit}) {
-    try {
-        return await axiosClient.post('/logout')
-            .then((response) => {
-                commit('setToken', null)
-                return response;
-            })
-    } catch (error) {
-        throw error;
-    }
+export function logout({commit}) {
+    return axiosClient.post('/logout')
+        .then((response) => {
+            commit('setToken', null)
+
+            return response;
+        })
 }
 
-export async function getProducts({commit, state}, {url = null, search = '', per_page, sort_field, sort_direction}) {
-    commit('setProducts', [true]); // mutation: setProducts(state, [loading, data = null])  => loading = true
-    url = url || '/products';
-    try {
-        const response = await axiosClient.get(url, {
-            params: {search, per_page, sort_field, sort_direction}
-        });
-
-        commit('setProducts', [false, response.data]);
-        return response.data;
-    } catch (error) {
-        console.error("Error fetching products:", error);
-        commit('setProducts', [false]);
-        throw error;
+export function getProducts({commit, state}, {url = null, search = '', per_page, sort_field, sort_direction} = {}) {
+    commit('setProducts', [true])
+    url = url || '/products'
+    const params = {
+        per_page: state.products.limit,
     }
-}
-
-export async function createProduct({commit}, product) {
-    try {
-        if (product.image instanceof File) {
-            const form = new FormData();
-            form.append('title', product.title);
-            form.append('image', product.image);
-            form.append('description', product.description);
-            form.append('price', product.price);
-            product = form;
+    return axiosClient.get(url, {
+        params: {
+            ...params,
+            search, per_page, sort_field, sort_direction
         }
-        return await axiosClient.post('/products', product)
-    } catch (error) {
-        throw error;
+    })
+        .then((response) => {
+            commit('setProducts', [false, response.data])
+        })
+        .catch(() => {
+            commit('setProducts', [false])
+        })
+}
+
+export function getProduct({commit}, id) {
+    return axiosClient.get(`/products/${id}`)
+}
+
+export function createProduct({commit}, product) {
+    if (product.image instanceof File) {
+        const form = new FormData();
+        form.append('title', product.title);
+        form.append('image', product.image);
+        form.append('description', product.description);
+        form.append('price', product.price);
+        product = form;
     }
+    return axiosClient.post('/products', product)
+}
+
+export function updateProduct({commit}, product) {
+    const id = product.id
+    if (product.image instanceof File) {
+        const form = new FormData();
+        form.append('id', product.id);
+        form.append('title', product.title);
+        form.append('image', product.image);
+        form.append('description', product.description);
+        form.append('price', product.price);
+        form.append('_method', 'PUT');
+        product = form;
+    }
+    return axiosClient.post(`/products/${id}`, product)
+}
+
+export function deleteProduct({commit}, id) {
+    return axiosClient.delete(`/products/${id}`)
 }
